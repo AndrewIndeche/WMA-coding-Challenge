@@ -16,9 +16,41 @@ Use the requirements.txt files to download pre-requisite packages needed to run 
 
 (WMA-coding challenge) $ pipenv lock -r > requirements.txt
 
+### Setup
+Rename the .env.sample file to .env and add all listed entries
+
+Spawn a shell in a virtual environment
+pipenv shell
+
+
+Turn off a virtual environment
+exit
+
 ### Installing
+Install pipenv:
+pip install pipenv
+
+Check if pipenv is installed:
+pipenv --version
+>> pipenv, version 2018.11.26
 
 Rename the .env.sample file to .env and add all listed entries
+
+Install dependencies in piplock file
+pipenv sync
+
+Install new dependency
+pipenv install <dependency name here>
+
+Regenerate lock file after new dependency installations
+pipenv lock
+
+List all dependencies currently installed
+pipenv lock -r
+
+Uninstall dependency
+pipenv uninstall <dependency name here>
+
 
 ## Running the tests
 
