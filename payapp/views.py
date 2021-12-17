@@ -1,8 +1,8 @@
 from django.shortcuts import render
 import requests
 from django.contrib.auth.models import User
-from .models import Customer,Payment
-from .serializer import CustomerSerializer,CustomerCreateSerializer,PaymentSerializer
+from .models import Customer,Payment,Verification
+from .serializer import CustomerSerializer,PaymentSerializer,VerificationSerializer
 
 # api.
 from django.http import JsonResponse
@@ -18,33 +18,27 @@ class CustomerView(APIView):
     """
     View Customer details.
     """
-    permission_classes = (IsAdminOrReadOnly,)
-
-    def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = CustomerSerializer(users, many=True)
-        return Response(serializer.data)
-
-
+    def get(self, request):
+        #customer = Customer.objects.all().values {'fullname', 'created_at', 'email', 'mobile_number','location','status'}
+        response = requests.get ('https://api.flutterwave.com/v3/charges?type=card').json()
+        return JsonResponse(customer.data)
 
 class PaymentView(APIView):
     """
-    List all users.
+    View specifics of a payment.
     """
-    permission_classes = (IsAdminOrReadOnly,)
 
-    def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = PaymentSerializer(users, many=True)
-        return Response(serializer.data)
+    def post(self, request):
+        #payment = Payment.objects.all().values {'card_number', 'cvv ', 'currency', 'amount','tx_ref ','account_number','account_name'}
+        response = requests.post ('https://api.flutterwave.com/v3/charges?type=mpesa').json()
+        return JsonResponse(payment.data)
 
 class VerificationView(APIView):
     """
-    List all users.
+    View status and message on verification
     """
-    permission_classes = (IsAdminOrReadOnly,)
 
-    def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = PaymentSerializer(users, many=True)
-        return Response(serializer.data)
+    def get(self, request):
+        #verification = Verification.objects.all().values {'status', 'message','data'}
+        response = requests.get ('https://api.flutterwave.com/v3/transactions/123456/verify').json()
+        return JsonResponse(Verification.data)

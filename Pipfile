@@ -22,6 +22,8 @@ drf-flex-fields = "*"
 autopep8 = "*"
 rave-python = "*"
 requests = "*"
+python-decouple = "*"
+dj-database-url = "*"
 
 [dev-packages]
 

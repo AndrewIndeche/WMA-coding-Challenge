@@ -14,7 +14,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         model = Payment
         fields = ('card_number', 'cvv', 'currency', 'amount ','tx_ref ','account_number','account_name',)
 
-class PaymentSerializer(serializers.ModelSerializer):
+class VerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Verification
         fields = ('status', 'message', 'date',)
