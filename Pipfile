@@ -20,6 +20,8 @@ django-cors-headers = "*"
 cloudinary = "*"
 drf-flex-fields = "*"
 autopep8 = "*"
+rave-python = "*"
+requests = "*"
 
 [dev-packages]
 
