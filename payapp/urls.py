@@ -8,9 +8,9 @@ urlpatterns = [
     # api
     url(r'^api/customer/$', views.CustomerView.as_view()),
     url(r'^api/payM/$', views.PaymentView.as_view()),
+    url(r'^api/subscription/$', views.SubscriptionView.as_view()),
     url(r'^api/verification/$', views.VerificationView.as_view()),
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

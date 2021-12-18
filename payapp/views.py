@@ -1,8 +1,8 @@
 from django.shortcuts import render
 import requests
 from django.contrib.auth.models import User
-from .models import Customer,Payment,Verification
-from .serializer import CustomerSerializer,PaymentSerializer,VerificationSerializer
+from .models import Customer,Payment,Subscription,Verification
+from .serializer import CustomerSerializer,PaymentSerializer,SubscriptionSerializer,VerificationSerializer
 
 # api.
 from django.http import JsonResponse
@@ -15,23 +15,53 @@ from rave_python import Rave
 # rest api ====================================
 
 class CustomerView(APIView):
-    """
-    View Customer details.
-    """
-    def get(self, request):
-        #customer = Customer.objects.all().values {'fullname', 'created_at', 'email', 'mobile_number','location','status'}
-        response = requests.get ('https://api.flutterwave.com/v3/charges?type=card').json()
-        return JsonResponse(customer.data)
+    def get(self, request,pk):
+        customer = self.get(pk)
+        serializers = CustomerSerializer(customer,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request):
+        customer = self.get(pk)
+        serializers = PaymentSerializer(payment,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PaymentView(APIView):
     """
     View specifics of a payment.
     """
+    def put(self, request,pk):
+        payment = self.get(pk)
+        serializers = PaymentSerializer(payment,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self, request):
-        #payment = Payment.objects.all().values {'card_number', 'cvv ', 'currency', 'amount','tx_ref ','account_number','account_name'}
-        response = requests.post ('https://api.flutterwave.com/v3/charges?type=mpesa').json()
-        return JsonResponse(payment.data)
+
+class SubscriptionView(APIView):
+    """
+    View specifics of a payment.
+    """
+
+    def get(self, request,pk):
+        subscription = self.get(pk)
+        serializers = SubscriptionSerializer(subscritpion,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):  # delete employee
+        notes = self.get(pk)
+        notes.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class VerificationView(APIView):
     """
@@ -39,6 +69,9 @@ class VerificationView(APIView):
     """
 
     def get(self, request):
-        #verification = Verification.objects.all().values {'status', 'message','data'}
-        response = requests.get ('https://api.flutterwave.com/v3/transactions/123456/verify').json()
-        return JsonResponse(Verification.data)
+        verification = self.get(pk)
+        serializers = VerificationSerializer(verification,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
