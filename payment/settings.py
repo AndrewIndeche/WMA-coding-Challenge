@@ -36,7 +36,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -106,7 +106,6 @@ if config('MODE')=='dev':
             'PASSWORD': config('DB_PASSWORD'),
             'HOST': config('DB_HOST'),
             'PORT': '',
-            'ALLOWED_HOSTS': config('ALLOWED_HOSTS'),
         }
     }
 else:
