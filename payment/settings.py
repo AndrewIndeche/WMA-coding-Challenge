@@ -106,6 +106,7 @@ if config('MODE')=='dev':
             'PASSWORD': config('DB_PASSWORD'),
             'HOST': config('DB_HOST'),
             'PORT': '',
+            'ALLOWED_HOSTS': config('ALLOWED_HOSTS'),
         }
     }
 else:
