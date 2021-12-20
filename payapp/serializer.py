@@ -1,5 +1,5 @@
 from rest_framework import fields, serializers, validators
-from .models import Customer,Payment,Subscription,Verification
+from .models import Customer,Payment,Verification
 from django.db.models import fields
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -11,12 +11,9 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = ('name','amount','interval','duration')
-class SubscriptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Subscription
-        fields = ('__all__')
 
 class VerificationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Verification
+        model = Customer
+        model = Payment
         fields = ('__all__')

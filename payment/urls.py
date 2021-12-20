@@ -24,6 +24,7 @@ from rest_framework import permissions
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view

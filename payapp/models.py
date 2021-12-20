@@ -20,22 +20,7 @@ class Payment(models.Model):
     interval = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     amount = models.IntegerField(blank=True)
-    PAYMENT_STATUS = (
-        (PREMIUM, 'is_premium'),
-        (NOTPREMIUM, 'is_not_premium'),
-    )
-    status = models.CharField(max_length=100, choices=PAYMENT_STATUS,default='is_not_premium', help_text="The status of this subscription.")
-
-    def __str__(self):
-        return self.status
-
-class Subscription(models.Model):
-    id = models.IntegerField (primary_key=True)
-    Authorization = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.Authorization
-
+    
 class Verification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=100)
