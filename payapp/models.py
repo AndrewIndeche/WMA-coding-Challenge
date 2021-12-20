@@ -13,9 +13,7 @@ class Customer(models.Model):
     location = models.CharField(max_length=100)
 
 class Payment(models.Model):
-    PREMIUM = 'is_premium'
-    NOTPREMIUM ='is_not_premium'
-
+  
     duration = models.IntegerField(blank=True)
     interval = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
