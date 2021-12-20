@@ -21,11 +21,3 @@ class Payment(models.Model):
     name = models.CharField(max_length=100)
     amount = models.IntegerField(blank=True)
     
-class Verification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=100)
-    message = models.CharField(max_length=100)
-    data = models.CharField(max_length=300)
-
-    def __str__(self):
-        return self.status
