@@ -1,4 +1,6 @@
 
+# TO USE ENDPOINTS REMOVE SWAGGER SCHEMA AND USE POSTMAN AGENT
+
 #  WMA-coding challenge
 The project folder contains a Django project of a WMA-coding challenge for user subscription and renewal to access premium content
 
