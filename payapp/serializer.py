@@ -1,5 +1,5 @@
 from rest_framework import fields, serializers, validators
-from .models import Customer,Payment,Verification
+from .models import Customer,Payment
 from django.db.models import fields
 
 class CustomerSerializer(serializers.ModelSerializer):

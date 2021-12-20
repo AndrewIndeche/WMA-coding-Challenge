@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.db.models.query import QuerySet
 import requests
 from django.contrib.auth.models import User
-from .models import Customer,Payment,Verification
-from .serializer import CustomerSerializer,PaymentSerializer,VerificationSerializer
+from .models import Customer,Payment
+from .serializer import CustomerSerializer,PaymentSerializer
 
 # api.
 from django.http import JsonResponse
