@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'payment',
     'rest_framework',
-
+    'url_or_relative_url_field',
     'rest_framework.authtoken',
     'corsheaders',
 ]
@@ -105,7 +105,7 @@ if config('MODE')=='dev':
             'NAME': config('DB_NAME'),
             'USER': config('DB_USER'),
             'PASSWORD': config('DB_PASSWORD'),
-            'HOST': config('DB_HOST'),
+            'DB_HOST': config('DB_HOST'),
             'PORT': '',
         }
     }
@@ -158,4 +158,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())

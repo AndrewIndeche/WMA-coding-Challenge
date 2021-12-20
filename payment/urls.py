@@ -21,13 +21,21 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 
+from django.contrib import admin
+from django.urls import path
+from django.conf.urls import url, include
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 schema_view = get_schema_view(
    openapi.Info(
-      title="WM PAYMENT API",
+      title="Snippets API",
       default_version='v1',
       description="Test description",
       terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="indecheandrew@gmail.com"),
+      contact=openapi.Contact(email="contact@snippets.local"),
       license=openapi.License(name="BSD License"),
    ),
    public=True,
@@ -38,6 +46,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url("payment/", include("payapp.urls")),
     url(r'^api-auth/', obtain_auth_token),
-    path("redoc/", schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path("", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

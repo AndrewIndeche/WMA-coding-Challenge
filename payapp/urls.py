@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # api
-    url(r'^api/customer/$', views.CustomerView.as_view()),
+    url(r'^api/customer/$', views.CustomerViews.as_view()),
     url(r'^api/payM/$', views.PaymentView.as_view()),
     url(r'^api/subscription/$', views.SubscriptionView.as_view()),
     url(r'^api/verification/$', views.VerificationView.as_view()),

@@ -1,4 +1,6 @@
+
 from django.shortcuts import render
+from django.db.models.query import QuerySet
 import requests
 from django.contrib.auth.models import User
 from .models import Customer,Payment,Subscription,Verification
@@ -10,43 +12,56 @@ from rest_framework import status,generics
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rave_python import Rave
+from rest_framework.exceptions import NotFound
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 # rest api ====================================
 
-class CustomerView(APIView):
-    def get(self, request,pk):
-        customer = self.get(pk)
-        serializers = CustomerSerializer(customer,data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+class CustomerViews(APIView):
+    """
+    Edit and get Customer details
+    """
+    def post(self,request,format=None):
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-    def post(self, request):
-        customer = self.get(pk)
-        serializers = PaymentSerializer(payment,data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self,request,format=None):
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 class PaymentView(APIView):
     """
-    View specifics of a payment.
+    View and make payments
     """
-    def put(self, request,pk):
-        payment = self.get(pk)
-        serializers = PaymentSerializer(payment,data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self,request,format=None):
+        serializer = PaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "is_premium", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self,request):
+        serializer = PaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "is_premium", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SubscriptionView(APIView):
     """
-    View specifics of a payment.
+    View subscriptions status
     """
 
     def get(self, request,pk):
@@ -54,10 +69,11 @@ class SubscriptionView(APIView):
         serializers = SubscriptionSerializer(subscritpion,data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):  # delete employee
+    def delete(self, request, pk):  # delete employee
         notes = self.get(pk)
         notes.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -68,10 +84,11 @@ class VerificationView(APIView):
     View status and message on verification
     """
 
-    def get(self, request):
+    def get(self, request,pk):
         verification = self.get(pk)
         serializers = VerificationSerializer(verification,data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
